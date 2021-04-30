@@ -1,6 +1,7 @@
 package com.madpezkoh.course.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.madpezkoh.course.entities.enums.OrderStatus;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -19,6 +20,8 @@ public class Order implements Serializable {
             timezone = "GMT")
     private Instant issuedAt;
 
+    private Integer orderStatus;
+
     @ManyToOne @JoinColumn(name = "client_id")
     private User client;
 
@@ -26,19 +29,23 @@ public class Order implements Serializable {
     @Deprecated
     public Order() {}
 
-    public Order(Long id, Instant issuedAt, User client) {
+    public Order(Long id, Instant issuedAt, OrderStatus orderStatus, User client) {
         this.id = id;
         this.issuedAt = issuedAt;
+        setOrderStatus(orderStatus);
         this.client = client;
     }
 
 
     public Long getId() { return id; }
     public Instant getIssuedAt() { return issuedAt; }
+    public OrderStatus getOrderStatus() { return OrderStatus.valueOf(orderStatus); }
     public User getClient() { return client; }
+
 
     public void setId(Long id) { this.id = id; }
     public void setIssuedAt(Instant issuedAt) { this.issuedAt = issuedAt; }
+    public void setOrderStatus(OrderStatus orderStatus) { this.orderStatus = orderStatus.getStep(); }
     public void setClient(User client) { this.client = client; }
 
 
