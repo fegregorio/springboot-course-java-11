@@ -1,5 +1,7 @@
 package com.madpezkoh.course.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.Instant;
@@ -13,10 +15,7 @@ public class Payment implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Instant paymentDate;
-
-    @OneToOne
-    @MapsId
-    private Order order;
+    private @OneToOne @MapsId @JsonIgnore Order order;
 
 
     @Deprecated

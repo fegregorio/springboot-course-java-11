@@ -59,6 +59,16 @@ public class Order implements Serializable {
     public void setClient(User client) { this.client = client; }
     public void setPayment(Payment payment) { this.payment = payment; }
 
+    public Double getTotal() {
+
+        double sum = 0.0;
+        for (OrderItem oi : items) {
+            sum += oi.getSubtotal();
+        }
+
+        return sum;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
