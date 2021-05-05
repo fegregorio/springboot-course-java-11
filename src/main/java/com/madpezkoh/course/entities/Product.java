@@ -1,5 +1,7 @@
 package com.madpezkoh.course.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -24,6 +26,9 @@ public class Product implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "category_id"))
     private Set<Category> categories = new HashSet<>();
 
+    @OneToMany(mappedBy = "id.product")
+    private Set<OrderItem> items = new HashSet<>();
+
 
     @Deprecated
     public Product() {}
@@ -43,6 +48,16 @@ public class Product implements Serializable {
     public Double getPrice() { return price; }
     public String getImgUrl() { return imgUrl; }
     public Set<Category> getCategories() { return categories; }
+
+    public @JsonIgnore Set<Order> getOrders() {
+
+        Set<Order> set = new HashSet<>();
+        for (OrderItem oi : items) {
+            set.add(oi.getOrder());
+        }
+
+        return set;
+    }
 
     public void setId(Long id) { this.id = id; }
     public void setName(String name) { this.name = name; }
