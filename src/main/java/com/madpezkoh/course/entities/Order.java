@@ -31,6 +31,9 @@ public class Order implements Serializable {
     @OneToMany(mappedBy = "id.order")
     private Set<OrderItem> items = new HashSet<>();
 
+    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
+    private Payment payment;
+
 
     @Deprecated
     public Order() {}
@@ -48,13 +51,13 @@ public class Order implements Serializable {
     public OrderStatus getOrderStatus() { return OrderStatus.valueOf(orderStatus); }
     public User getClient() { return client; }
     public Set<OrderItem> getItems() { return items; }
-
+    public Payment getPayment() { return payment; }
 
     public void setId(Long id) { this.id = id; }
     public void setIssuedAt(Instant issuedAt) { this.issuedAt = issuedAt; }
     public void setOrderStatus(OrderStatus orderStatus) { this.orderStatus = orderStatus.getStep(); }
     public void setClient(User client) { this.client = client; }
-
+    public void setPayment(Payment payment) { this.payment = payment; }
 
     @Override
     public boolean equals(Object o) {
